@@ -50,7 +50,6 @@
 //
 
 #include "pch.h"
-#include <algorithm>
 
 std::mutex mtx;
 
@@ -76,18 +75,5 @@ int main()
 	int sum = 0;
 	int num = 0;
 	std::vector<std::thread> ver;
-	for (int i = 0; i < 20; i++)
-	{
-		std::thread t = std::thread(add, std::ref(num), std::ref(sum));
-		//ver.push_back(std::move(t));
-		t.detach();
-	}
-	std::cout << sum << std::endl;
-
-	//while (true)
-	//{
-	//	std::this_thread::sleep_for(std::chrono::seconds(2));
-	//}
-
 	return 0;
 }

@@ -58,7 +58,7 @@ void add(int &num, int &sum)
 {
 	while (true)
 	{
-		std::lock_guard<std::mutex> lock(mtx);
+		//std::lock_guard<std::mutex> lock(mtx);
 		if (num < 100)
 		{
 			num += 1;
@@ -82,12 +82,11 @@ int main()
 		//ver.push_back(std::move(t));
 		t.detach();
 	}
-	std::cout << sum << std::endl;
 
-	//while (true)
-	//{
-	//	std::this_thread::sleep_for(std::chrono::seconds(2));
-	//}
+	while (true)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+	}
 
 	return 0;
 }

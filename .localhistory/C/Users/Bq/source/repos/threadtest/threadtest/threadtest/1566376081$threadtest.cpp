@@ -50,44 +50,20 @@
 //
 
 #include "pch.h"
-#include <algorithm>
-
-std::mutex mtx;
 
 void add(int &num, int &sum)
 {
 	while (true)
 	{
 		std::lock_guard<std::mutex> lock(mtx);
-		if (num < 100)
-		{
-			num += 1;
-			sum += num;
-		}
-		else
-		{
-			break;
-		}
 	}
 }
 
 int main()
 {
-	int sum = 0;
-	int num = 0;
-	std::vector<std::thread> ver;
-	for (int i = 0; i < 20; i++)
-	{
-		std::thread t = std::thread(add, std::ref(num), std::ref(sum));
-		//ver.push_back(std::move(t));
-		t.detach();
-	}
-	std::cout << sum << std::endl;
+	std::mutex mtx;
+	std::lock_guard<std::mutex> mtxg(mtx);
 
-	//while (true)
-	//{
-	//	std::this_thread::sleep_for(std::chrono::seconds(2));
-	//}
-
+	std::unique_lock<std::mutex> mtxl(mtx);
 	return 0;
 }

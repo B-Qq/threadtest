@@ -58,7 +58,7 @@ void add(int &num, int &sum)
 {
 	while (true)
 	{
-		std::lock_guard<std::mutex> lock(mtx);
+		//std::lock_guard<std::mutex> lock(mtx);
 		if (num < 100)
 		{
 			num += 1;

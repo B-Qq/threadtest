@@ -79,15 +79,10 @@ int main()
 	for (int i = 0; i < 20; i++)
 	{
 		std::thread t = std::thread(add, std::ref(num), std::ref(sum));
-		//ver.push_back(std::move(t));
-		t.detach();
+		ver.push_back(std::move(t));
+		t.join();
 	}
+
 	std::cout << sum << std::endl;
-
-	//while (true)
-	//{
-	//	std::this_thread::sleep_for(std::chrono::seconds(2));
-	//}
-
 	return 0;
 }

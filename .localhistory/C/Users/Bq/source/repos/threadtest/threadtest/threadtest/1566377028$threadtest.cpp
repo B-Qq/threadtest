@@ -73,21 +73,23 @@ void add(int &num, int &sum)
 
 int main()
 {
-	int sum = 0;
-	int num = 0;
-	std::vector<std::thread> ver;
-	for (int i = 0; i < 20; i++)
-	{
-		std::thread t = std::thread(add, std::ref(num), std::ref(sum));
-		//ver.push_back(std::move(t));
-		t.detach();
-	}
-	std::cout << sum << std::endl;
-
-	//while (true)
+	//int sum = 0;
+	//int num = 0;
+	//std::vector<std::thread> ver;
+	//for (int i = 0; i < 20; i++)
 	//{
-	//	std::this_thread::sleep_for(std::chrono::seconds(2));
+	//	std::thread t = std::thread(add, num++, sum++);
+	//	ver.push_back(std::move(t));
 	//}
 
-	return 0;
+	//std::for_each(ver.begin(), ver.end(), [](std::thread t) {t.join; });
+	//std::cout << sum << std::endl;
+	std::vector<int> veci;
+	for (int i = 0; i < 20; i++)
+	{
+		veci.emplace_back(i);
+	}
+
+	std::for_each(veci.begin(), veci.end(), [](int i) {std::cout << "i" << std::endl})
+		return 0;
 }
