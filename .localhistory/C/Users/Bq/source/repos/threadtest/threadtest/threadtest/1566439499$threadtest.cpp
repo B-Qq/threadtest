@@ -90,7 +90,6 @@ int main()
 
 	std::lock_guard<std::mutex> ccsa(mtx);
 	std::unique_lock<std::mutex> ccsss(mtx);
-	ccsss.unlock();
 
 	//for (auto &t : arrayInt)
 	//{

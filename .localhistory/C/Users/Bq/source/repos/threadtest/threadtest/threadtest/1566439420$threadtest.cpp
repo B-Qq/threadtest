@@ -84,14 +84,6 @@ int main()
 	std::cout << std::get<1>(ccs) << std::endl;
 	std::cout << std::get<2>(ccs) << std::endl;
 
-	std::cout << std::get<0>(css) << std::endl;
-	std::cout << std::get<1>(css) << std::endl;
-	std::cout << std::get<2>(css) << std::endl;
-
-	std::lock_guard<std::mutex> ccsa(mtx);
-	std::unique_lock<std::mutex> ccsss(mtx);
-	ccsss.unlock();
-
 	//for (auto &t : arrayInt)
 	//{
 	//	std::cout << t << std::endl;

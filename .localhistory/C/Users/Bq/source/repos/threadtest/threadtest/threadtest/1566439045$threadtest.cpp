@@ -78,19 +78,10 @@ int main()
 	std::vector<std::thread> ver;
 	std::array<int, 4> arrayInt = { 1, 2, 3, 4 };
 	std::tuple<int, std::string, char> cct = { 1, "2", '3' };
-	auto ccs = std::tie("11", "22", "33");
-	auto css = std::make_tuple("11", "23", 1);
-	std::cout << std::get<0>(ccs) << std::endl;
-	std::cout << std::get<1>(ccs) << std::endl;
-	std::cout << std::get<2>(ccs) << std::endl;
 
-	std::cout << std::get<0>(css) << std::endl;
-	std::cout << std::get<1>(css) << std::endl;
-	std::cout << std::get<2>(css) << std::endl;
-
-	std::lock_guard<std::mutex> ccsa(mtx);
-	std::unique_lock<std::mutex> ccsss(mtx);
-	ccsss.unlock();
+	std::cout << std::get<0>(cct) << std::endl;
+	//std::cout << std::get<1>(cct) << std::endl;
+	std::cout << std::get<2>(cct) << std::endl;
 
 	//for (auto &t : arrayInt)
 	//{
