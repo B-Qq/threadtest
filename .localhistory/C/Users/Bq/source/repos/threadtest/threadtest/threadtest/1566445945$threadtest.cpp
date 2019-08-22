@@ -176,7 +176,6 @@
 
 std::deque<int> q;
 std::mutex mtx;
-std::condition_variable c;
 
 void function_1()
 {
@@ -186,7 +185,6 @@ void function_1()
 		std::unique_lock<std::mutex> locker(mtx);
 		q.push_back(count);
 		locker.unlock();
-		c.notify_one();
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		count--;
 	}
@@ -197,14 +195,18 @@ void function_2()
 	int data = 0;
 	while (data != 1)
 	{
-		std::cout << "11" << std::endl;
 		std::unique_lock<std::mutex> locker(mtx);
-		c.wait(locker, []() {return !q.empty(); });
-		std::cout << "22" << std::endl;
-		data = q.back();
-		q.pop_back();
-		locker.unlock();
-		std::cout << "t2 got a value from t1:" << data << std::endl;
+		if (!q.empty())
+		{
+			data = q.back();
+			q.pop_back();
+			locker.unlock();
+			std::cout << "t2 got a value from t1:" << data << std::endl;
+		}
+		else
+		{
+			locker.unlock();
+		}
 	}
 }
 

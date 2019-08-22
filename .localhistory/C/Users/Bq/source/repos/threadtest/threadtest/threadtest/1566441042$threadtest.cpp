@@ -115,104 +115,36 @@
 
 #include "pch.h"
 #include <algorithm>
-#include <regex>
 
-//std::mutex mtx;
-//
-//static int num = 0;
-//static int sum = 0;
-//
-//void add()
-//{
-//	//std::lock_guard<std::mutex> glock(mtx);
-//	if (num < 5)
-//	{
-//		num += 1;
-//		sum += num;
-//	}
-//}
-//
-//int main()
-//{
-//	//std::vector<std::thread *> threads;
-//
-//	//for (int i = 0; i < 5; i++)
-//	//{
-//	//	std::thread *t = new std::thread(add);
-//	//	threads.emplace_back(t);
-//	//}
-//
-//	//std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->detach(); });
-//
-//	//std::cout << "sum" << sum << std::endl;
-//
-//	//std::string fnames[] = { "foo.txt", "bar.txt", "test", "a0.txt", "AAA.txt" };
-//	//std::regex txt_regex(R("[A-Z]+[0-9]+.txt"));
-//	//for (const auto &fname : fnames)
-//	//	std::cout << fname << ": " << std::regex_match(fname, txt_regex) << std::endl;
-//	return 0;
-//}
-
-//int sum(int a, int b)
-//{
-//	std::this_thread::sleep_for(std::chrono::seconds(5));
-//	return a + b;
-//}
-//
-//int main()
-//{
-//	std::packaged_task<int(int, int)> task(sum);
-//	std::future<int> future = task.get_future();
-//	std::thread t(std::move(task), 1, 2);
-//	while (1)
-//	{
-//		std::this_thread::sleep_for(std::chrono::seconds(1));
-//		std::cout << "1 + 2:" << future.get() << std::endl;
-//	}
-//
-//	t.join();
-//	return 0;
-//}
-
-std::deque<int> q;
 std::mutex mtx;
-std::condition_variable c;
 
-void function_1()
+void add()
 {
-	int count = 50;
-	while (count > 0)
+	static int num = 0;
+	static int sum = 0;
+	//std::lock_guard<std::mutex> glock(mtx);
+	if (num < 5)
 	{
-		std::unique_lock<std::mutex> locker(mtx);
-		q.push_back(count);
-		locker.unlock();
-		c.notify_one();
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		count--;
-	}
-}
-
-void function_2()
-{
-	int data = 0;
-	while (data != 1)
-	{
-		std::cout << "11" << std::endl;
-		std::unique_lock<std::mutex> locker(mtx);
-		c.wait(locker, []() {return !q.empty(); });
-		std::cout << "22" << std::endl;
-		data = q.back();
-		q.pop_back();
-		locker.unlock();
-		std::cout << "t2 got a value from t1:" << data << std::endl;
+		num += 1;
+		sum += num;
 	}
 }
 
 int main()
 {
-	std::thread t1(function_1);
-	std::thread t2(function_2);
-	t1.join();
-	t2.join();
+	std::vector<std::thread *> threads;
+	int num = 0;
+	int sum = 0;
+
+	for (int i = 0; i < 5; i++)
+	{
+		std::thread *t = new std::thread(add);
+		threads.emplace_back(t);
+	}
+
+	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
+
+	std::cout << "sum" << sum << std::endl;
+
 	return 0;
 }

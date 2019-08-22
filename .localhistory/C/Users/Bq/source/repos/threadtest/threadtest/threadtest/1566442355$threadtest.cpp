@@ -153,66 +153,13 @@
 //	return 0;
 //}
 
-//int sum(int a, int b)
-//{
-//	std::this_thread::sleep_for(std::chrono::seconds(5));
-//	return a + b;
-//}
-//
-//int main()
-//{
-//	std::packaged_task<int(int, int)> task(sum);
-//	std::future<int> future = task.get_future();
-//	std::thread t(std::move(task), 1, 2);
-//	while (1)
-//	{
-//		std::this_thread::sleep_for(std::chrono::seconds(1));
-//		std::cout << "1 + 2:" << future.get() << std::endl;
-//	}
-//
-//	t.join();
-//	return 0;
-//}
-
-std::deque<int> q;
-std::mutex mtx;
-std::condition_variable c;
-
-void function_1()
+int sum(int a, int b)
 {
-	int count = 50;
-	while (count > 0)
-	{
-		std::unique_lock<std::mutex> locker(mtx);
-		q.push_back(count);
-		locker.unlock();
-		c.notify_one();
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		count--;
-	}
-}
-
-void function_2()
-{
-	int data = 0;
-	while (data != 1)
-	{
-		std::cout << "11" << std::endl;
-		std::unique_lock<std::mutex> locker(mtx);
-		c.wait(locker, []() {return !q.empty(); });
-		std::cout << "22" << std::endl;
-		data = q.back();
-		q.pop_back();
-		locker.unlock();
-		std::cout << "t2 got a value from t1:" << data << std::endl;
-	}
+	return a + b;
 }
 
 int main()
 {
-	std::thread t1(function_1);
-	std::thread t2(function_2);
-	t1.join();
-	t2.join();
-	return 0;
+	std::pack
+		return 0;
 }

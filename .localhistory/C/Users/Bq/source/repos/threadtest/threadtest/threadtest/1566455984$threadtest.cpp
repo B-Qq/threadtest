@@ -186,7 +186,7 @@ void function_1()
 		std::unique_lock<std::mutex> locker(mtx);
 		q.push_back(count);
 		locker.unlock();
-		c.notify_one();
+		//c.notify_one();
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 		count--;
 	}

@@ -197,10 +197,10 @@ void function_2()
 	int data = 0;
 	while (data != 1)
 	{
-		std::cout << "11" << std::endl;
 		std::unique_lock<std::mutex> locker(mtx);
-		c.wait(locker, []() {return !q.empty(); });
-		std::cout << "22" << std::endl;
+		//while (q.empty())
+		if (q.empty())
+			c.wait(locker);
 		data = q.back();
 		q.pop_back();
 		locker.unlock();
