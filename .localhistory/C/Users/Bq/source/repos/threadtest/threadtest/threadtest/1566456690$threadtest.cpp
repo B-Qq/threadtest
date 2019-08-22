@@ -187,8 +187,7 @@ void function_1()
 		q.push_back(count);
 		locker.unlock();
 		c.notify_one();
-		//std::this_thread::sleep_for(std::chrono::seconds(1));
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 		count--;
 	}
 }
@@ -198,27 +197,25 @@ void function_2()
 	int data = 0;
 	while (data != 1)
 	{
+		std::cout << "11" << std::endl;
 		std::unique_lock<std::mutex> locker(mtx);
 		c.wait(locker, []() {return !q.empty(); });
+		std::cout << "22" << std::endl;
 		data = q.back();
 		q.pop_back();
 		locker.unlock();
-		std::cout << "thread::" << std::this_thread::get_id() << " got a value from t1:" << data << std::endl;
+		std::cout << "t2 got a value from t1:" << data << std::endl;
 	}
 }
 
 int main()
 {
 	std::thread t1(function_1);
-	std::vector<std::thread *> threads;
-
-	for (int i = 00; i < 10; i++)
-	{
-		std::thread *t2 = new std::thread(function_2);
-		threads.emplace_back(std::move(t2));
-	}
+	std::thread t2(function_2);
+	std::thread t3(function_2);
+	std::thread t4(function_2);
+	std::thread t5(function_2);
 	t1.join();
-
-	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
+	t2.join();
 	return 0;
 }

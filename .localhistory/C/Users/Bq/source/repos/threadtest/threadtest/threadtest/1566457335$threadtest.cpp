@@ -214,7 +214,7 @@ int main()
 
 	for (int i = 00; i < 10; i++)
 	{
-		std::thread *t2 = new std::thread(function_2);
+		std::thread t2 = new std::thread(function_2);
 		threads.emplace_back(std::move(t2));
 	}
 	t1.join();

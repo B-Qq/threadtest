@@ -214,11 +214,11 @@ int main()
 
 	for (int i = 00; i < 10; i++)
 	{
-		std::thread *t2 = new std::thread(function_2);
+		std::thread t2 = new std::thread(function_2);
 		threads.emplace_back(std::move(t2));
 	}
 	t1.join();
 
-	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
+	std::for_each(threads.begin(), threads.end(), [](std::thread t) {t.join(); });
 	return 0;
 }

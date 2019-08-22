@@ -210,15 +210,19 @@ void function_2()
 int main()
 {
 	std::thread t1(function_1);
-	std::vector<std::thread *> threads;
+	std::vector<std::thread> threads;
 
 	for (int i = 00; i < 10; i++)
 	{
-		std::thread *t2 = new std::thread(function_2);
+		std::thread t2(function_2);
 		threads.emplace_back(std::move(t2));
 	}
 	t1.join();
 
-	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
+	std::for_each(threads.begin(), threads.end(), [](std::thread t) {t.join(); });
+	t2.join();
+	t3.join();
+	t4.join();
+	t5.join();
 	return 0;
 }
