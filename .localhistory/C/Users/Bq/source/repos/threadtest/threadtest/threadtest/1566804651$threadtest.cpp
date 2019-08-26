@@ -235,16 +235,9 @@ int main()
 	//tmp.erase(tmp.begin() + 2);
 	//std::cout << "tmp:" << tmp << std::endl;
 
-	std::vector<int> v = { 1, 2 ,13232 ,4 ,5 ,6 ,1,2,1,1,1,1,1 };
-	auto result = std::minmax_element(v.begin(), v.end());
-
-	std::cout << *result.first << " " << *result.second << std::endl;
-
-	auto res = std::count(v.begin(), v.end(), 1);
-	int x = 1;
-	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
-	std::cout << res << std::endl;
-	std::cout << cc << std::endl;
-
+	std::vector<std::string> str = { "apple","banana", "key", "cat", "dog", "orange" };
+	auto find_str = "banana";
+	auto sd = std::remove_if(str.begin(), str.end(), [find_str](string a) {return find_str == a; });
+	str.erase(sd, str.end());
 	return 0;
 }

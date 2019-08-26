@@ -228,23 +228,7 @@ int main()
 	//std::string tmp = "abcdecfgaabcd";
 	//tmp.erase(std::remove_if(tmp.begin(), tmp.end(), [](char x) {return x == 'a'; }), tmp.end());
 	//std::cout << tmp << std::endl;
-	//std::string tmp = "123456789";
-	//auto it = tmp.begin() + 3;
-	//tmp.erase(0, 2);
-	//std::cout << "tmp:" << tmp << std::endl;
-	//tmp.erase(tmp.begin() + 2);
-	//std::cout << "tmp:" << tmp << std::endl;
-
-	std::vector<int> v = { 1, 2 ,13232 ,4 ,5 ,6 ,1,2,1,1,1,1,1 };
-	auto result = std::minmax_element(v.begin(), v.end());
-
-	std::cout << *result.first << " " << *result.second << std::endl;
-
-	auto res = std::count(v.begin(), v.end(), 1);
-	int x = 1;
-	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
-	std::cout << res << std::endl;
-	std::cout << cc << std::endl;
-
+	std::string tmp = "123456789";
+	std::cout << tmp.erase(0, 2) << std::endl;
 	return 0;
 }

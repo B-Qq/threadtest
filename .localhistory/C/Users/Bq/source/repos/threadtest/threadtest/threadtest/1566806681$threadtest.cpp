@@ -241,10 +241,8 @@ int main()
 	std::cout << *result.first << " " << *result.second << std::endl;
 
 	auto res = std::count(v.begin(), v.end(), 1);
-	int x = 1;
-	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
-	std::cout << res << std::endl;
-	std::cout << cc << std::endl;
+	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; })
+		std::cout << res << std::endl;
 
 	return 0;
 }

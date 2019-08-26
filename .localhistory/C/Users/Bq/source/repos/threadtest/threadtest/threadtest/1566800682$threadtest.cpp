@@ -174,77 +174,51 @@
 //	return 0;
 //}
 
-//std::deque<int> q;
-//std::mutex mtx;
-//std::condition_variable c;
-//
-//void function_1()
-//{
-//	int count = 50;
-//	while (count > 0)
-//	{
-//		std::unique_lock<std::mutex> locker(mtx);
-//		q.push_back(count);
-//		locker.unlock();
-//		c.notify_one();
-//		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
-//		std::this_thread::sleep_for(std::chrono::seconds(2));
-//		count--;
-//	}
-//}
-//
-//void function_2()
-//{
-//	int data = 0;
-//	while (data != 1)
-//	{
-//		std::unique_lock<std::mutex> locker(mtx);
-//		c.wait(locker, []() {return !q.empty(); });
-//		data = q.back();
-//		q.pop_back();
-//		locker.unlock();
-//		std::cout << "thread::" << std::this_thread::get_id() << " got a value from t1:" << data << std::endl;
-//	}
-//}
-//
-//int main()
-//{
-//	std::thread t1(function_1);
-//	std::vector<std::thread *> threads;
-//
-//	for (int i = 00; i < 10; i++)
-//	{
-//		auto *t2 = new std::thread(function_2);
-//		threads.emplace_back(t2);
-//	}
-//	t1.join();
-//
-//	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
-//	return 0;
-//}
+std::deque<int> q;
+std::mutex mtx;
+std::condition_variable c;
+
+void function_1()
+{
+	int count = 50;
+	while (count > 0)
+	{
+		std::unique_lock<std::mutex> locker(mtx);
+		q.push_back(count);
+		locker.unlock();
+		c.notify_one();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		count--;
+	}
+}
+
+void function_2()
+{
+	int data = 0;
+	while (data != 1)
+	{
+		std::unique_lock<std::mutex> locker(mtx);
+		c.wait(locker, []() {return !q.empty(); });
+		data = q.back();
+		q.pop_back();
+		locker.unlock();
+		std::cout << "thread::" << std::this_thread::get_id() << " got a value from t1:" << data << std::endl;
+	}
+}
 
 int main()
 {
-	//std::string tmp = "abcdecfgaabcd";
-	//tmp.erase(std::remove_if(tmp.begin(), tmp.end(), [](char x) {return x == 'a'; }), tmp.end());
-	//std::cout << tmp << std::endl;
-	//std::string tmp = "123456789";
-	//auto it = tmp.begin() + 3;
-	//tmp.erase(0, 2);
-	//std::cout << "tmp:" << tmp << std::endl;
-	//tmp.erase(tmp.begin() + 2);
-	//std::cout << "tmp:" << tmp << std::endl;
+	std::thread t1(function_1);
+	std::vector<std::thread *> threads;
 
-	std::vector<int> v = { 1, 2 ,13232 ,4 ,5 ,6 ,1,2,1,1,1,1,1 };
-	auto result = std::minmax_element(v.begin(), v.end());
+	for (int i = 00; i < 10; i++)
+	{
+		auto *t2 = new std::thread(function_2);
+		threads.emplace_back(t2);
+	}
+	t1.join();
 
-	std::cout << *result.first << " " << *result.second << std::endl;
-
-	auto res = std::count(v.begin(), v.end(), 1);
-	int x = 1;
-	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
-	std::cout << res << std::endl;
-	std::cout << cc << std::endl;
-
+	std::for_each(threads.begin(), threads.end(), [](std::thread *t) {t->join(); });
 	return 0;
 }
