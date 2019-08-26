@@ -238,9 +238,7 @@ void test_1()
 		std::cout << "满足" << std::endl;
 	}
 
-	std::for_each(ivec.begin(), ivec.end(), [](int i) { std::cout << "i:" << i << std::endl; });
-
-	std::cout << *find(ivec.begin(), ivec.end(), 20) << std::endl;
+	std::for_each(ivec.begin(), ivec.end(), [](int i) {cout << "i:" << i << std::endl})
 }
 
 int main()

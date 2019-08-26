@@ -223,26 +223,6 @@
 //	return 0;
 //}
 
-void test_1()
-{
-	std::vector<int> ivec{ 1,2,3,4,5,6,7,8,9,10 };
-	std::vector<int> v{ 5,6,7,8,9,10 };
-
-	if (std::all_of(ivec.begin(), ivec.end(), [](int i) {return i < 20; }))
-	{
-		std::cout << "都满足条件" << std::endl;
-	}
-
-	if (std::any_of(v.begin(), v.end(), [](int x) {return x > 9; }))
-	{
-		std::cout << "满足" << std::endl;
-	}
-
-	std::for_each(ivec.begin(), ivec.end(), [](int i) { std::cout << "i:" << i << std::endl; });
-
-	std::cout << *find(ivec.begin(), ivec.end(), 20) << std::endl;
-}
-
 int main()
 {
 	//std::string tmp = "abcdecfgaabcd";
@@ -255,18 +235,16 @@ int main()
 	//tmp.erase(tmp.begin() + 2);
 	//std::cout << "tmp:" << tmp << std::endl;
 
-	//std::vector<int> v = { 1, 2 ,13232 ,4 ,5 ,6 ,1,2,1,1,1,1,1 };
-	//auto result = std::minmax_element(v.begin(), v.end());
+	std::vector<int> v = { 1, 2 ,13232 ,4 ,5 ,6 ,1,2,1,1,1,1,1 };
+	auto result = std::minmax_element(v.begin(), v.end());
 
-	//std::cout << *result.first << " " << *result.second << std::endl;
+	std::cout << *result.first << " " << *result.second << std::endl;
 
-	//auto res = std::count(v.begin(), v.end(), 1);
-	//int x = 1;
-	//auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
-	//std::cout << res << std::endl;
-	//std::cout << cc << std::endl;
-
-	test_1();
+	auto res = std::count(v.begin(), v.end(), 1);
+	int x = 1;
+	auto cc = std::count_if(v.begin(), v.end(), [x](int c) {return x == c; });
+	std::cout << res << std::endl;
+	std::cout << cc << std::endl;
 
 	return 0;
 }
