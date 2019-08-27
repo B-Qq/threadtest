@@ -266,13 +266,10 @@ int main()
 	//std::cout << res << std::endl;
 	//std::cout << cc << std::endl;
 
-	std::vector<int> cv = { 1,4,2,9,5,102,54,33 };
-	std::sort(cv.begin(), cv.end());
+	std::string tmp = "abcaabccb";
+	std::find_first_of("abc";
 
-	for (auto it : cv)
-	{
-		std::cout << it << std::endl;
-	}
-	//test_1();
+	test_1();
+
 	return 0;
 }

@@ -267,12 +267,8 @@ int main()
 	//std::cout << cc << std::endl;
 
 	std::vector<int> cv = { 1,4,2,9,5,102,54,33 };
-	std::sort(cv.begin(), cv.end());
 
-	for (auto it : cv)
-	{
-		std::cout << it << std::endl;
-	}
+	std::cout << tmp.find_last_of("abc") << std::endl;
 	//test_1();
 	return 0;
 }
